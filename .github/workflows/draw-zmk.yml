@@ -105,9 +105,13 @@ jobs:
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
 
+      - name: Install pipx
+        if: inputs.install_branch == ''
+        run: python -m pip install pipx
+
       - name: Install keymap-drawer (pypi)
         if: inputs.install_branch == ''
-        run: python -m pip install keymap-drawer
+        run: python -m pipx install keymap-drawer
 
       - name: Install keymap-drawer (git)
         if: inputs.install_branch != ''
