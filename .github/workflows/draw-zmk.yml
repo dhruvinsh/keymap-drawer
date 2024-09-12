@@ -96,17 +96,26 @@ jobs:
           fetch-depth: ${{ (inputs.amend_commit == true && 2) || 1 }}
           submodules: recursive
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          architecture: "x64"
+
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+
       - name: Install keymap-drawer (pypi)
         if: inputs.install_branch == ''
-        run: python3 -m pip install keymap-drawer
+        run: python -m pip install keymap-drawer
 
       - name: Install keymap-drawer (git)
         if: inputs.install_branch != ''
-        run: python3 -m pip install "git+${{ inputs.install_repo }}@${{ inputs.install_branch }}"
+        run: python -m pip install "git+${{ inputs.install_repo }}@${{ inputs.install_branch }}"
 
       - name: Install west
         if: inputs.west_config_path != ''
-        run: python3 -m pip install west
+        run: python -m pip install west
 
       - name: Cache west modules
         if: inputs.west_config_path != ''
